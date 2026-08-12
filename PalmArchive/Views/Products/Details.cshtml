@@ -1,0 +1,28 @@
+@model PalmArchive.Models.Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+<section class="detail-page">
+    <div class="detail-image"><img src="@Model.Image" alt="@Model.Name" /></div>
+    <div class="detail-copy">
+        <a asp-action="Index" asp-route-brand="@Model.Brand" class="eyebrow">@Model.Brand.ToUpperInvariant()</a>
+        <h1>@Model.Name</h1>
+        <p class="detail-price">$@Model.Price.ToString("N0") CAD</p>
+        <p class="detail-category">@Model.Category.ToUpperInvariant()</p>
+        <p>@Model.Description</p>
+        <div class="detail-actions">
+            <form asp-controller="Cart" asp-action="Add" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                <button type="submit" class="dark-button wide">ADD TO BAG</button>
+            </form>
+            <a class="outline-button wide"
+               href="https://www.instagram.com/palm.archive.ca/"
+               target="_blank">
+                ORDER THROUGH INSTAGRAM
+            </a>
+        </div>
+        <div class="detail-note"><strong>ORDER PROCESS</strong><p>Add the item to your bag, then message Palm Archive to confirm size, condition, and current availability before purchase.</p></div>
+    </div>
+</section>

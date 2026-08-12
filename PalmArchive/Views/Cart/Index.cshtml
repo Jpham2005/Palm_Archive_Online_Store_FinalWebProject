@@ -1,0 +1,32 @@
+@model List<PalmArchive.Models.CartItem>
+@{
+    ViewData["Title"] = "Shopping Bag";
+    var total = Model.Sum(x => x.LineTotal);
+}
+<section class="shop-header"><p class="eyebrow">PALM ARCHIVE</p><h1>YOUR BAG</h1><p>@Model.Sum(x => x.Quantity) item(s)</p></section>
+<section class="cart-page">
+@if (!Model.Any())
+{
+    <div class="empty-state"><h2>Your bag is empty.</h2><p>Find a piece from the current collection.</p><a asp-controller="Products" asp-action="Index" class="dark-button">SHOP COLLECTION</a></div>
+}
+else
+{
+    <div class="cart-list">
+    @foreach (var item in Model)
+    {
+        <article class="cart-item">
+            <img src="@item.Image" alt="@item.Name" />
+            <div><small>@item.Brand.ToUpperInvariant()</small><h3>@item.Name</h3><p>QTY @item.Quantity</p></div>
+            <div class="cart-price">$@item.LineTotal.ToString("N0")</div>
+            <form asp-action="Remove" method="post">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@item.ProductId" /><button type="submit" class="text-button">REMOVE</button></form>
+        </article>
+    }
+    </div>
+    <aside class="cart-summary">
+        <div><span>ESTIMATED TOTAL</span><strong>$@total.ToString("N0") CAD</strong></div>
+        <p>Availability, size, condition, shipping, and final payment are confirmed directly with Palm Archive.</p>
+        <a class="dark-button wide" href="https://www.instagram.com/" target="_blank" rel="noopener">CONTINUE ON INSTAGRAM</a>
+        <form asp-action="Clear" method="post">@Html.AntiForgeryToken()<button class="text-button" type="submit">CLEAR BAG</button></form>
+    </aside>
+}
+</section>

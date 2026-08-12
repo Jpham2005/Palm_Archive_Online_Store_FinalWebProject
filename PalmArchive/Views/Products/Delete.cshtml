@@ -1,0 +1,3 @@
+@model PalmArchive.Models.Product
+@{ ViewData["Title"] = "Delete Product"; }
+<section class="form-shell"><div class="form-card"><p class="eyebrow">ADMIN</p><h1>DELETE PRODUCT?</h1><p>You are about to remove <strong>@Model.Name</strong> by @Model.Brand.</p><img src="@Model.Image" alt="@Model.Name" style="max-width:220px;margin:24px 0" /><form asp-action="Delete" method="post">@Html.AntiForgeryToken()<input type="hidden" asp-for="Id" /><div class="form-actions"><button type="submit" class="dark-button">DELETE</button><a asp-action="Manage">CANCEL</a></div></form></div></section>

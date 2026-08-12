@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | Palm Archive</title>
+    <link rel="stylesheet" href="~/css/palmarchive.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="topbar">
+        <button id="menuButton" class="menu-button" type="button" aria-label="Open menu">☰</button>
+        <a class="brand" asp-controller="Home" asp-action="Index">PALM ARCHIVE</a>
+        <div class="top-actions">
+            <a class="admin-link" asp-controller="Products" asp-action="Manage">ADMIN</a>
+            <a class="cart-link" asp-controller="Cart" asp-action="Index" aria-label="Shopping bag">
+                <img src="~/images/cart.png" alt="Bag" />
+            </a>
+        </div>
+    </header>
+
+    <div id="menuOverlay" class="menu-overlay"></div>
+    <aside id="sideMenu" class="side-menu" aria-hidden="true">
+        <div class="side-menu-header">
+            <strong>SHOP</strong>
+            <button id="closeMenu" type="button" aria-label="Close menu">×</button>
+        </div>
+        <a asp-controller="Products" asp-action="Index">ALL PRODUCTS</a>
+        <a asp-controller="Products" asp-action="Index" asp-route-q="men">MEN</a>
+        <a asp-controller="Products" asp-action="Index" asp-route-q="women">WOMEN</a>
+        <hr />
+        <a asp-controller="Products" asp-action="Index" asp-route-brand="Balenciaga">BALENCIAGA</a>
+        <a asp-controller="Products" asp-action="Index" asp-route-brand="Bape">BAPE</a>
+        <a asp-controller="Products" asp-action="Index" asp-route-brand="Louis Vuitton">LOUIS VUITTON</a>
+        <a asp-controller="Products" asp-action="Index" asp-route-brand="Maison Margiela">MAISON MARGIELA</a>
+        <a asp-controller="Products" asp-action="Index" asp-route-brand="Bottega Veneta">BOTTEGA VENETA</a>
+        <a asp-controller="Products" asp-action="Index" asp-route-brand="Acne Studios">ACNE STUDIOS</a>
+    </aside>
+
+    @if (TempData["CartMessage"] is string message)
+    {
+        <div class="toast-message">@message</div>
+    }
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div><strong>PALM ARCHIVE © 2026</strong></div>
+        <div>CURATED LUXURY &amp; ARCHIVE FASHION · TORONTO GTA</div>
+        <div class="footer-links">
+            <a asp-controller="Products" asp-action="Index">SHOP</a>
+            <a href="https://www.instagram.com/palm.archive.ca/" target="_blank" rel="noopener">INSTAGRAM</a>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,8 @@
+@model IEnumerable<PalmArchive.Models.Product>
+@{ ViewData["Title"] = "Admin Products"; }
+<section class="admin-shell">
+    <div class="section-heading"><div><p class="eyebrow">ADMIN</p><h1>PRODUCT MANAGEMENT</h1></div><a asp-action="Create" class="dark-button">+ ADD PRODUCT</a></div>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>PRODUCT</th><th>BRAND</th><th>CATEGORY</th><th>PRICE</th><th>ACTIONS</th></tr></thead><tbody>
+    @foreach (var item in Model) { <tr><td><div class="admin-product"><img src="@item.Image" alt="" /><span>@item.Name</span></div></td><td>@item.Brand</td><td>@item.Category</td><td>$@item.Price.ToString("N0")</td><td><a asp-action="Edit" asp-route-id="@item.Id">EDIT</a> · <a asp-action="Details" asp-route-id="@item.Id">VIEW</a> · <a asp-action="Delete" asp-route-id="@item.Id">DELETE</a></td></tr> }
+    </tbody></table></div>
+</section>

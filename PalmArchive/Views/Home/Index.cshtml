@@ -1,0 +1,70 @@
+@model IEnumerable<PalmArchive.Models.Product>
+@{
+    ViewData["Title"] = "Designer Archive";
+}
+
+<section class="search-strip">
+    <form asp-controller="Products" asp-action="Index" method="get">
+        <input name="q" placeholder="WHAT ARE YOU LOOKING FOR?" aria-label="Search products" />
+        <button type="submit">SEARCH</button>
+    </form>
+</section>
+
+<nav class="brand-nav">
+    <a asp-controller="Products" asp-action="Index" asp-route-brand="Balenciaga">BALENCIAGA</a>
+    <a asp-controller="Products" asp-action="Index" asp-route-brand="Bape">BAPE</a>
+    <a asp-controller="Products" asp-action="Index" asp-route-brand="Louis Vuitton">LOUIS VUITTON</a>
+    <a asp-controller="Products" asp-action="Index" asp-route-brand="Maison Margiela">MAISON MARGIELA</a>
+    <a asp-controller="Products" asp-action="Index" asp-route-brand="Bottega Veneta">BOTTEGA VENETA</a>
+    <a asp-controller="Products" asp-action="Index" asp-route-brand="Acne Studios">ACNE STUDIOS</a>
+</nav>
+
+<section class="hero">
+    <img src="~/images/theme(1).png" alt="Palm Archive collection" />
+    <div class="hero-copy">
+        <p>WINTER 2026 DROP</p>
+        <h1>DESIGNER<br />ARCHIVE</h1>
+        <a class="dark-button" asp-controller="Products" asp-action="Index">SHOP COLLECTION</a>
+    </div>
+</section>
+
+<section class="profile-section">
+    <img src="~/images/logo.png" alt="Palm Archive logo" />
+    <div>
+        <p class="eyebrow">TORONTO · GTA</p>
+        <h2>Palm Archive</h2>
+        <p>Curated designer fashion, archive pieces, and luxury deals. Browse the collection, save pieces to your bag, then contact Palm Archive to confirm size and availability.</p>
+    </div>
+</section>
+
+<section class="section-shell">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">CURATED NOW</p>
+            <h2>Featured pieces</h2>
+        </div>
+        <a asp-controller="Products" asp-action="Index">VIEW ALL →</a>
+    </div>
+
+    <div class="product-grid">
+        @foreach (var item in Model)
+        {
+            <article class="product-card">
+                <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" class="product-image-wrap">
+                    <img src="@item.Image" alt="@item.Name" loading="lazy" />
+                </a>
+                <div class="product-info">
+                    <small>@item.Brand.ToUpperInvariant()</small>
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@item.Id" class="product-name">@item.Name</a>
+                    <strong>$@item.Price.ToString("N0")</strong>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="brand-editorial">
+    <a asp-controller="Products" asp-action="Index" asp-route-brand="Louis Vuitton"><img src="~/images/louistheme.png" alt="Louis Vuitton" /><span>LOUIS VUITTON</span></a>
+    <a asp-controller="Products" asp-action="Index" asp-route-brand="Bape"><img src="~/images/bapetheme.png" alt="Bape" /><span>BAPE</span></a>
+    <a asp-controller="Products" asp-action="Index" asp-route-brand="Balenciaga"><img src="~/images/balentheme.png" alt="Balenciaga" /><span>BALENCIAGA</span></a>
+</section>

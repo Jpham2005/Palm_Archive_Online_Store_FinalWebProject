@@ -1,0 +1,65 @@
+@model IEnumerable<PalmArchive.Models.Product>
+@{
+    ViewData["Title"] = "Shop";
+    var brands = ViewBag.Brands as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var categories = ViewBag.Categories as IEnumerable<string> ?? Enumerable.Empty<string>();
+}
+
+<section class="shop-header">
+    <p class="eyebrow">PALM ARCHIVE COLLECTION</p>
+    <h1>SHOP</h1>
+    <p>@Model.Count() pieces</p>
+</section>
+
+<section class="filter-shell">
+    <form method="get" class="filter-form">
+        <input type="search" name="q" value="@ViewBag.Q" placeholder="SEARCH BRAND, ITEM, CATEGORY OR TAG" />
+        <select name="brand">
+            <option value="">ALL BRANDS</option>
+            @foreach (var b in brands) { <option value="@b" selected="@(ViewBag.Brand == b)">@b.ToUpperInvariant()</option> }
+        </select>
+        <select name="category">
+            <option value="">ALL CATEGORIES</option>
+            @foreach (var c in categories) { <option value="@c" selected="@(ViewBag.Category == c)">@c.ToUpperInvariant()</option> }
+        </select>
+        <select name="sort">
+            <option value="">NEWEST</option>
+            <option value="price-low" selected="@(ViewBag.Sort == "price-low")">PRICE LOW–HIGH</option>
+            <option value="price-high" selected="@(ViewBag.Sort == "price-high")">PRICE HIGH–LOW</option>
+            <option value="name" selected="@(ViewBag.Sort == "name")">NAME A–Z</option>
+        </select>
+        <button type="submit">FILTER</button>
+        <a asp-action="Index" class="clear-filter">CLEAR</a>
+    </form>
+</section>
+
+<section class="section-shell shop-grid-shell">
+    @if (!Model.Any())
+    {
+        <div class="empty-state"><h2>No pieces found.</h2><p>Try another brand, category, or search term.</p><a asp-action="Index" class="dark-button">VIEW ALL PRODUCTS</a></div>
+    }
+    else
+    {
+        <div class="product-grid">
+            @foreach (var item in Model)
+            {
+                <article class="product-card">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="product-image-wrap"><img src="@item.Image" alt="@item.Name" loading="lazy" /></a>
+                    <div class="product-info">
+                        <small>@item.Brand.ToUpperInvariant()</small>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="product-name">@item.Name</a>
+                        <div class="product-bottom">
+                            <strong>$@item.Price.ToString("N0")</strong>
+                            <form asp-controller="Cart" asp-action="Add" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                                <button class="text-button" type="submit">ADD TO BAG</button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+</section>

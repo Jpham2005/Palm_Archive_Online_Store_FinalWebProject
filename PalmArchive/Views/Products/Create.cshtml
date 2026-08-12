@@ -1,0 +1,15 @@
+@model PalmArchive.Models.Product
+@{ ViewData["Title"] = "Add Product"; }
+<section class="form-shell"><div class="section-heading"><div><p class="eyebrow">ADMIN</p><h1>ADD PRODUCT</h1></div><a asp-action="Manage">BACK</a></div>
+<form asp-action="Create" method="post" class="form-card">
+    <div asp-validation-summary="ModelOnly" class="validation"></div>
+    <div class="field"><label asp-for="Name"></label><input asp-for="Name" /><span asp-validation-for="Name" class="validation"></span></div>
+    <div class="field"><label asp-for="Brand"></label><input asp-for="Brand" /><span asp-validation-for="Brand" class="validation"></span></div>
+    <div class="field"><label asp-for="Category"></label><input asp-for="Category" /><span asp-validation-for="Category" class="validation"></span></div>
+    <div class="field"><label asp-for="Price"></label><input asp-for="Price" /><span asp-validation-for="Price" class="validation"></span></div>
+    <div class="field"><label asp-for="Image">Image path</label><input asp-for="Image" placeholder="/images/example.jpg" /><span asp-validation-for="Image" class="validation"></span></div>
+    <div class="field"><label asp-for="Description"></label><textarea asp-for="Description"></textarea></div>
+    <div class="field"><label asp-for="Tags"></label><textarea asp-for="Tags" placeholder="brand, men, women, black, archive..."></textarea></div>
+    <div class="form-actions"><button type="submit" class="dark-button">SAVE PRODUCT</button><a asp-action="Manage">CANCEL</a></div>
+</form></section>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
